@@ -1,13 +1,29 @@
-<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <title>Admin Panel</title>
-  <script type="module" src="firebase.js"></script>
+  <script type="module">
+    import { auth } from './firebase.js';
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    window.logout = function() {
+      signOut(auth).then(() => {
+        alert("Logout berhasil!");
+        window.location.href = "login.html";
+      });
+    }
+  </script>
 </head>
 <body>
   <h1>Dashboard Admin</h1>
-  <p>Hanya admin yang bisa mengakses halaman ini.</p>
+  <p>Selamat datang! Anda berhasil login.</p>
+  <button onclick="logout()">Logout</button>
 </body>
 </html>
