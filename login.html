@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Admin</title>
+  <script type="module">
+    import { auth } from './firebase.js';
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.email.value;
+        const password = form.password.value;
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("Login berhasil!");
+          window.location.href = "admin.html";
+        } catch (error) {
+          alert("Login gagal: " + error.message);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Login Admin</h1>
+  <form id="loginForm">
+    <input type="email" name="email" placeholder="Email" required /><br />
+    <input type="password" name="password" placeholder="Password" required /><br />
+    <button type="submit">Login</button>
+  </form>
+  <p>Belum punya akun? <a href="register.html">Register di sini</a></p>
+</body>
+</html>
